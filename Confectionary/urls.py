@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(('shop.urls', 'shop'), namespace='shop')),
 ]
+
+# from django.shortcuts import render
+# from .models import Cupcake
+
+# def cupcake_list(request):
+#     cakes = Cupcake.objects.all().order_by('-createdAt')
+#     context = {"cakes": cakes}
+#     return render(request,"menu/list.html",context)
