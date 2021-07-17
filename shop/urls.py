@@ -2,14 +2,23 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import ProductList
 
 app_name = 'shop'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('base/', views.base, name='base'),
-    path('category/<slug:category_slug>/', views.product_list,name='product_list'),
-    # path('<int:id>/<slug:slug>/', views.product_detail,name='blog_details'),
-    path('about/', views.about, name='about'),
-    # path('product_details/', views.product_details, name='product_details')
+    path('category/<slug:category_slug>/', views.product_list,name='products_by_category'),
+    path('products/', views.product_list, name='products'),
+    path('about_us/', views.about_us, name='about_us'),
+    path('blog/', views.blog, name='blog'),
+    path('blog/blog_details/', views.blog_details, name='blog_details'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('contact/', views.contact, name='contact'),
+    path('products/', ProductList.as_view()),
+    path('product_detail/<int:product_id>/', views.product_detail, name='product_detail'),
+    path('category/', views.category_list, name='categories'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+

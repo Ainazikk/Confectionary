@@ -1,0 +1,111 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    {% include 'shop/header.html' %}
+        
+        <!-- cart-main-area start -->
+        <div class="cart-main-area ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form action="#">               
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-thumbnail">Image</th>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                            <th class="product-subtotal">Total</th>
+                                            <th class="product-remove">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in cart %}
+                                            <tr>
+                                                <td class="product-thumbnail"><a href="#"><img src="images/product/4.png" alt="product img" /></a></td>
+                                                <td class="product-name"><a href="#">{{item.name}}</a></td>
+                                                <td class="product-price"><span class="amount">{{item.price}}</span></td>
+                                                <td class="product-quantity">
+                                                    <form action="{% url 'cart:cart_add' item.product.id %}" method="post">
+                                                        {% csrf_token %}                                                        
+                                                        {{ item.update_quantity_form.quantity }}
+                                                        {{ item.update_quantity_form.override }}
+                                                        <input type="submit" id="update-product-bt" value="Update">                                                        
+                                                    </form>
+                                                </td>
+                                                <td class="product-subtotal">{{item.total_price}}</td>
+                                                <td class="product-remove"><a href="{% url 'cart:delete_from_cart' product_id=item.product.id %}">X</a></td>
+                                            </tr> 
+                                        {% endfor %}                                                                              
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                    <div class="buttons-cart">
+                                        <input type="submit" value="Update Cart" />
+                                        <a href="#">Continue Shopping</a>
+                                    </div>
+                                    <div class="coupon">
+                                        <h3>Coupon</h3>
+                                        <p>Enter your coupon code if you have one.</p>
+                                        <form action="#" method="POST">
+                                            {{%csrf_token%}
+                                            {{coupon_form}}
+                                            <input type="submit" value="Apply Coupon" />
+                                        </form>
+                                        <!-- <input type="text" placeholder="Coupon code" />
+                                        <input type="submit" value="Apply Coupon" /> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-12">
+                                    <div class="cart_totals">
+                                        <h2>Cart Totals</h2>
+                                        <table>
+                                            <tbody>
+                                                <tr class="cart-subtotal">
+                                                    <th>Subtotal</th>
+                                                    <td><span class="amount">{{cart.total_price}}</span></td>
+                                                </tr>
+                                                <tr class="shipping">
+                                                    <th>Discount</th>
+                                                    <td>
+                                                        <ul id="shipping_method">
+                                                            <li>
+                                                                <input type="radio" /> 
+                                                                <label>
+                                                                    {{cart.get_discount}}</span>
+                                                                </label>
+                                                            </li>
+                                                            
+                                                            
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="order-total">
+                                                    <th>Total</th>
+                                                    <td>
+                                                        <strong><span class="amount">{{cart.total_price}}</span></strong>
+                                                    </td>
+                                                </tr>                                           
+                                            </tbody>
+                                        </table>
+                                        <div class="wc-proceed-to-checkout">
+                                            <a href="#">Proceed to Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart-main-area end -->
+{% endblock %}
+
+

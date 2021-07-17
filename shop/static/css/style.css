@@ -1271,3 +1271,15 @@ a:focus,
 a:hover {
   color: #f9735b;
 }
+
+#add-to-cart-btn {
+  display: inline-block;
+  font-size: 15px;
+  /* padding: 12px 20px; */
+  background-color: #ed563b;
+  color: #fff;
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  transition: all .3s;
+}

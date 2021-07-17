@@ -5,7 +5,7 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=False, verbose_name='имя')
     slug = models.SlugField(max_length=200, blank=True, null=True, verbose_name='родительская категория')
-
+    image= models.ImageField(upload_to='categoty_images', blank=True)
 
     def __str__(self):
         return f"{self.name}{self.slug}"

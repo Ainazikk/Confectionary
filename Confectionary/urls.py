@@ -15,16 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('shop.urls', 'shop'), namespace='shop')),
+    path('cart/', include(('cart.urls'), namespace='cart'))
 ]
 
-# from django.shortcuts import render
-# from .models import Cupcake
+if settings.DEBUG: 
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-# def cupcake_list(request):
-#     cakes = Cupcake.objects.all().order_by('-createdAt')
-#     context = {"cakes": cakes}
-#     return render(request,"menu/list.html",context)
+
